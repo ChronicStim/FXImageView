@@ -212,7 +212,7 @@
     NSString *number = objc_getAssociatedObject(image, @"FXImageHash");
     if (!number && image)
     {
-        number = [NSString stringWithFormat:@"%i", hashKey++];
+        number = [NSString stringWithFormat:@"%li", (long)hashKey++];
         objc_setAssociatedObject(image, @"FXImageHash", number, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return number;
@@ -222,7 +222,7 @@
 {
     if (_cacheKey) return _cacheKey;
     
-    return [NSString stringWithFormat:@"%@_%@_%.2f_%.2f_%.2f_%@_%@_%.2f_%.2f_%i",
+    return [NSString stringWithFormat:@"%@_%@_%.2f_%.2f_%.2f_%@_%@_%.2f_%.2f_%li",
             _imageContentURL ?: [self imageHash:_originalImage],
             NSStringFromCGSize(self.bounds.size),
             _reflectionGap,
