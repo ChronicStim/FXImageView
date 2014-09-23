@@ -222,7 +222,7 @@
 {
     if (_cacheKey) return _cacheKey;
     
-    return [NSString stringWithFormat:@"%@_%@_%.2f_%.2f_%.2f_%@_%@_%.2f_%.2f_%li",
+    return [NSString stringWithFormat:@"%@_%@_%.2f_%.2f_%.2f_%@_%@_%.2f_%.2f_%i",
             _imageContentURL ?: [self imageHash:_originalImage],
             NSStringFromCGSize(self.bounds.size),
             _reflectionGap,
@@ -232,7 +232,7 @@
             NSStringFromCGSize(_shadowOffset),
             _shadowBlur,
             _cornerRadius,
-            self.contentMode];
+            (int)self.contentMode];
 }
 
 - (void)cacheProcessedImage:(UIImage *)processedImage forKey:(NSString *)cacheKey
