@@ -108,8 +108,18 @@
                              contentMode:(UIViewContentMode)contentMode
                                 padToFit:(BOOL)padToFit;
 {
+    return [self imageCroppedAndScaledToSize:size scale:1.0f contentMode:contentMode padToFit:padToFit padColor:[UIColor clearColor]];
+}
+
+- (UIImage *)imageCroppedAndScaledToSize:(CGSize)size
+                                   scale:(CGFloat)scale
+                             contentMode:(UIViewContentMode)contentMode
+                                padToFit:(BOOL)padToFit
+                                padColor:(UIColor *)padColor;
+{
     //calculate rect
     CGRect rect = CGRectZero;
+    size = CGSizeMake(size.width * scale, size.height * scale);
     switch (contentMode)
     {
         case UIViewContentModeScaleAspectFit:
@@ -205,6 +215,11 @@
         }
     }
     
+    //make size & rect integral
+    size.width = ceilf(size.width);
+    size.height = ceilf(size.height);
+    rect = CGRectIntegral(rect);
+    
     //avoid redundant drawing
     if (CGSizeEqualToSize(self.size, size))
     {
@@ -212,14 +227,26 @@
     }
     
     //create drawing context
-	UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef offscreen = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorspace, kCGImageAlphaNoneSkipLast);
+
+    //add padColor to background
+    if (padToFit && padColor) {
+        CGContextSetFillColorWithColor(offscreen, padColor.CGColor);
+        CGContextFillRect(offscreen, CGRectMake(0, 0, size.width, size.height));
+    }
     
     //draw
-    [self drawInRect:rect];
-    
+    CGContextDrawImage(offscreen, rect, self.CGImage);
+
     //capture resultant image
-	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
+    CGImageRef result = CGBitmapContextCreateImage(offscreen);
+    UIImage *image = [UIImage imageWithCGImage:result scale:scale orientation:UIImageOrientationUp];
+    
+    //release context
+    CGImageRelease(result);
+    CGColorSpaceRelease(colorspace);
+    CGContextRelease(offscreen);
 	
 	//return image
 	return image;
