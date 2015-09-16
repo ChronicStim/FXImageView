@@ -221,7 +221,7 @@
     rect = CGRectIntegral(rect);
     
     //avoid redundant drawing
-    if (CGSizeEqualToSize(self.size, size))
+    if (CGSizeEqualToSize(self.size, size) && self.scale == scale)
     {
         return self;
     }
