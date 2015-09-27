@@ -50,6 +50,13 @@
                                 padToFit:(BOOL)padToFit
                                 padColor:(UIColor *)padColor;
 
+- (UIImage *)imageCroppedAndScaledToSize:(CGSize)size
+                                   scale:(CGFloat)scale
+                             contentMode:(UIViewContentMode)contentMode
+                                padToFit:(BOOL)padToFit
+                                padColor:(UIColor *)padColor
+                         useAlphaChannel:(BOOL)useAlphaChannel;
+
 - (UIImage *)reflectedImageWithScale:(CGFloat)scale;
 - (UIImage *)imageWithReflectionWithScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha;
 - (UIImage *)imageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur;
