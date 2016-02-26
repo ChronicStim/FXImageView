@@ -435,7 +435,7 @@
     operation.target = self;
     
     //set operation thread priority
-    [operation setThreadPriority:1.0];
+    [operation setQualityOfService:NSQualityOfServiceUserInteractive];
     
     //queue operation
     [self queueProcessingOperation:operation];
