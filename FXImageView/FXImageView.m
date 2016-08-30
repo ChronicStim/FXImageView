@@ -265,9 +265,9 @@
     if ([[self cacheKey] isEqualToString:cacheKey])
     {
         //implement crossfade transition without needing to import QuartzCore
-        id animation = objc_msgSend(NSClassFromString(@"CATransition"), @selector(animation));
-        objc_msgSend(animation, @selector(setType:), @"kCATransitionFade");
-        objc_msgSend(self.layer, @selector(addAnimation:forKey:), animation, nil);
+        id animation = [CATransition animation];
+        [animation setType:kCATransitionFade];
+        [self.layer addAnimation:animation forKey:nil];
         
         //set processed image
         [self willChangeValueForKey:@"processedImage"];
