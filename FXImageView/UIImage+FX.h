@@ -39,9 +39,23 @@
 - (UIImage *)imageScaledToSize:(CGSize)size;
 - (UIImage *)imageScaledToFitSize:(CGSize)size;
 - (UIImage *)imageScaledToFillSize:(CGSize)size;
+
 - (UIImage *)imageCroppedAndScaledToSize:(CGSize)size
                              contentMode:(UIViewContentMode)contentMode
                                 padToFit:(BOOL)padToFit;
+
+- (UIImage *)imageCroppedAndScaledToSize:(CGSize)size
+                                   scale:(CGFloat)scale
+                             contentMode:(UIViewContentMode)contentMode
+                                padToFit:(BOOL)padToFit
+                                padColor:(UIColor *)padColor;
+
+- (UIImage *)imageCroppedAndScaledToSize:(CGSize)size
+                                   scale:(CGFloat)scale
+                             contentMode:(UIViewContentMode)contentMode
+                                padToFit:(BOOL)padToFit
+                                padColor:(UIColor *)padColor
+                         useAlphaChannel:(BOOL)useAlphaChannel;
 
 - (UIImage *)reflectedImageWithScale:(CGFloat)scale;
 - (UIImage *)imageWithReflectionWithScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha;
