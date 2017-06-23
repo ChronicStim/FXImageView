@@ -266,7 +266,7 @@
     {
         //implement crossfade transition without needing to import QuartzCore
         id animation = [CATransition animation];
-        [animation setType:kCATransitionFade];
+        [(CAAnimation *)animation setFillMode:kCATransitionFade];
         [self.layer addAnimation:animation forKey:nil];
         
         //set processed image
